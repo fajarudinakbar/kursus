@@ -36,6 +36,19 @@
             -moz-osx-font-smoothing: grayscale;
         }
         
+        /* A11Y: Screen-reader only class */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
         /* Custom animations */
         @keyframes pulse {
             0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
@@ -51,6 +64,20 @@
         .animate-custom-pulse { animation: pulse 2s infinite; }
         .animate-floating { animation: floating 4s ease-in-out infinite; }
         
+        /* A11Y: Reduce motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+            .animate-custom-pulse,
+            .animate-floating,
+            .transition-all,
+            .transition,
+            .hover\:scale-105,
+            .hover\:-translate-y-2 {
+                animation: none !important;
+                transition: none !important;
+                transform: none !important;
+            }
+        }
+
         /* Styles for scroll animations */
         .reveal {
             opacity: 0;
@@ -68,29 +95,33 @@
     <!-- Header & Navigation -->
     <header id="header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm transition-all duration-300">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
-            <a href="#" class="text-2xl font-bold text-indigo-600">Fajarudin Akbar</a>
-            <nav class="hidden md:flex space-x-8">
+            <a href="#" class="text-2xl font-bold text-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 rounded-lg">Fajarudin Akbar</a>
+            <nav class="hidden md:flex space-x-8" aria-label="Main Navigation">
                 <a href="#why-us" class="text-gray-600 hover:text-indigo-600 transition-colors">Keunggulan</a>
                 <a href="#about" class="text-gray-600 hover:text-indigo-600 transition-colors">Tentang Saya</a>
                 <a href="#programs" class="text-gray-600 hover:text-indigo-600 transition-colors">Program</a>
                 <a href="#contact" class="text-gray-600 hover:text-indigo-600 transition-colors">Kontak</a>
             </nav>
-            <a href="#contact" class="hidden md:inline-block bg-indigo-600 text-white px-5 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-transform hover:scale-105 shadow-md">
+            <a href="#contact" class="hidden md:inline-block bg-indigo-600 text-white px-5 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-transform hover:scale-105 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 Mulai Belajar
             </a>
-            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100">
-                <i data-feather="menu"></i>
+            <!-- A11Y: Added aria-controls, aria-expanded, and aria-label for accessibility -->
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false">
+                <span class="sr-only">Buka menu navigasi</span>
+                <i data-feather="menu" aria-hidden="true"></i>
             </button>
         </div>
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden px-4 pb-4">
-            <a href="#why-us" class="block py-2 text-gray-600 hover:text-indigo-600">Keunggulan</a>
-            <a href="#about" class="block py-2 text-gray-600 hover:text-indigo-600">Tentang Saya</a>
-            <a href="#programs" class="block py-2 text-gray-600 hover:text-indigo-600">Program</a>
-            <a href="#contact" class="block py-2 text-gray-600 hover:text-indigo-600">Kontak</a>
-            <a href="#contact" class="block w-full text-center mt-2 bg-indigo-600 text-white px-5 py-2 rounded-lg font-semibold hover:bg-indigo-700 shadow-md">
-                Mulai Belajar
-            </a>
+            <nav aria-label="Mobile Navigation">
+                <a href="#why-us" class="block py-2 text-gray-600 hover:text-indigo-600 mobile-menu-link">Keunggulan</a>
+                <a href="#about" class="block py-2 text-gray-600 hover:text-indigo-600 mobile-menu-link">Tentang Saya</a>
+                <a href="#programs" class="block py-2 text-gray-600 hover:text-indigo-600 mobile-menu-link">Program</a>
+                <a href="#contact" class="block py-2 text-gray-600 hover:text-indigo-600 mobile-menu-link">Kontak</a>
+                <a href="#contact" class="block w-full text-center mt-2 bg-indigo-600 text-white px-5 py-2 rounded-lg font-semibold hover:bg-indigo-700 shadow-md mobile-menu-link">
+                    Mulai Belajar
+                </a>
+            </nav>
         </div>
     </header>
 
@@ -99,12 +130,11 @@
         <section class="relative bg-gradient-to-br from-indigo-600 to-purple-800 text-white py-20 md:py-32 text-center overflow-hidden rounded-b-3xl shadow-xl">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div class="reveal visible">
-                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-4 drop-shadow-lg animate-floating">
+                    <!-- A11Y: Combined H1 and H2 into a single H1 for better semantic structure -->
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-8 drop-shadow-lg animate-floating">
                         Jago Bahasa Inggris untuk Karir & Kuliah
+                        <span class="block text-3xl md:text-5xl lg:text-6xl font-bold mt-2">Belajar Langsung Sama Ahlinya</span>
                     </h1>
-                    <h2 class="text-3xl md:text-5xl lg:text-6xl font-bold mb-8 drop-shadow-lg animate-floating" style="animation-delay: 0.5s;">
-                        Belajar Langsung Sama Ahlinya
-                    </h2>
                     <p class="text-lg md:text-xl mb-10 opacity-95 max-w-3xl mx-auto">
                         Nggak perlu ribet urusan administrasi. Fokus aja ke tujuanmu bareng saya, Fajarudin Akbar, pengajar bersertifikat internasional TESOL & TEFL.
                     </p>
@@ -118,35 +148,35 @@
         <!-- Why Learn Directly Section -->
         <section id="direct-learning" class="py-20 bg-white">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 reveal">
-                <h2 class="text-center text-3xl md:text-4xl font-extrabold text-gray-800 mb-4 relative">
+                <h2 class="text-center text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">
                     Belajar Tanpa Ribet, Fokus ke Hasil
                 </h2>
                 <p class="text-center text-lg text-gray-600 mb-16 max-w-3xl mx-auto">Kalau belajar langsung sama saya, nggak ada lagi birokrasi yang bikin pusing. Semuanya jadi lebih gampang, cepat, dan personal.</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
                     <div class="p-6">
                         <div class="flex items-center justify-center h-16 w-16 rounded-full bg-indigo-100 text-indigo-600 mx-auto mb-4">
-                            <i data-feather="user-check" class="w-8 h-8"></i>
+                            <i data-feather="user-check" class="w-8 h-8" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-xl font-semibold mb-2">Tanpa Perantara</h3>
                         <p class="text-gray-600">Kamu bakal ngobrol dan belajar langsung sama saya, bukan dilempar ke admin.</p>
                     </div>
                     <div class="p-6">
                         <div class="flex items-center justify-center h-16 w-16 rounded-full bg-indigo-100 text-indigo-600 mx-auto mb-4">
-                           <i data-feather="message-circle" class="w-8 h-8"></i>
+                           <i data-feather="message-circle" class="w-8 h-8" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-xl font-semibold mb-2">Komunikasi Langsung</h3>
                         <p class="text-gray-600">Mau nanya atau diskusi materi kapan aja, pasti saya respons lebih cepat.</p>
                     </div>
                     <div class="p-6">
                         <div class="flex items-center justify-center h-16 w-16 rounded-full bg-indigo-100 text-indigo-600 mx-auto mb-4">
-                            <i data-feather="calendar" class="w-8 h-8"></i>
+                            <i data-feather="calendar" class="w-8 h-8" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-xl font-semibold mb-2">Fleksibilitas Penuh</h3>
                         <p class="text-gray-600">Jadwal dan materi belajar super fleksibel, bisa diatur langsung sesuai kebutuhanmu.</p>
                     </div>
                     <div class="p-6">
                         <div class="flex items-center justify-center h-16 w-16 rounded-full bg-indigo-100 text-indigo-600 mx-auto mb-4">
-                            <i data-feather="zap" class="w-8 h-8"></i>
+                            <i data-feather="zap" class="w-8 h-8" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-xl font-semibold mb-2">Proses Cepat & Mudah</h3>
                         <p class="text-gray-600">Dari daftar sampai mulai kelas, prosesnya cepat dan nggak berbelit-belit.</p>
@@ -158,7 +188,7 @@
         <!-- Why Choose Us Section -->
         <section id="why-us" class="py-20 bg-gray-50">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 reveal">
-                <h2 class="text-center text-3xl md:text-4xl font-extrabold text-gray-800 mb-16 relative">
+                <h2 class="text-center text-3xl md:text-4xl font-extrabold text-gray-800 mb-16">
                     Apa Bedanya Program Ini?
                     <span class="block w-20 h-1 bg-gradient-to-r from-indigo-600 to-purple-800 rounded-full mx-auto mt-4"></span>
                 </h2>
@@ -166,7 +196,7 @@
                     <!-- Feature Card 1 -->
                     <div class="bg-white p-8 rounded-2xl shadow-lg text-center transition-all duration-300 ease-in-out border border-gray-100 hover:-translate-y-2 hover:shadow-2xl">
                         <div class="w-20 h-20 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-5 text-indigo-600">
-                            <i data-feather="target" class="w-10 h-10"></i>
+                            <i data-feather="target" class="w-10 h-10" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-gray-800 text-xl mb-4 font-semibold">Kurikulum Personal</h3>
                         <p class="text-gray-600 leading-relaxed">Materi belajarnya dibuat khusus sesuai targetmu, entah itu buat kerja, kuliah, atau tes.</p>
@@ -174,7 +204,7 @@
                     <!-- Feature Card 2 -->
                     <div class="bg-white p-8 rounded-2xl shadow-lg text-center transition-all duration-300 ease-in-out border border-gray-100 hover:-translate-y-2 hover:shadow-2xl">
                         <div class="w-20 h-20 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-5 text-indigo-600">
-                            <i data-feather="globe" class="w-10 h-10"></i>
+                            <i data-feather="globe" class="w-10 h-10" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-gray-800 text-xl mb-4 font-semibold">Pengajar Standar Global</h3>
                         <p class="text-gray-600 leading-relaxed">Saya punya sertifikat ngajar internasional (TESOL & TEFL) dan pengalaman melatih profesional dari berbagai negara.</p>
@@ -182,7 +212,7 @@
                     <!-- Feature Card 3 -->
                     <div class="bg-white p-8 rounded-2xl shadow-lg text-center transition-all duration-300 ease-in-out border border-gray-100 hover:-translate-y-2 hover:shadow-2xl">
                         <div class="w-20 h-20 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-5 text-indigo-600">
-                            <i data-feather="check-circle" class="w-10 h-10"></i>
+                            <i data-feather="check-circle" class="w-10 h-10" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-gray-800 text-xl mb-4 font-semibold">Hasil Terbukti</h3>
                         <p class="text-gray-600 leading-relaxed">Sudah banyak siswa yang kemampuannya meningkat pesat, baik untuk urusan kantor, kampus, maupun skor tes.</p>
@@ -190,7 +220,7 @@
                     <!-- Feature Card 4 -->
                     <div class="bg-white p-8 rounded-2xl shadow-lg text-center transition-all duration-300 ease-in-out border border-gray-100 hover:-translate-y-2 hover:shadow-2xl">
                         <div class="w-20 h-20 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-5 text-indigo-600">
-                           <i data-feather="smartphone" class="w-10 h-10"></i>
+                           <i data-feather="smartphone" class="w-10 h-10" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-gray-800 text-xl mb-4 font-semibold">Digital & Fleksibel</h3>
                         <p class="text-gray-600 leading-relaxed">Bisa belajar dari mana aja, jadwalnya pun gampang diatur sesuai kesibukanmu.</p>
@@ -202,18 +232,18 @@
         <!-- About Section -->
         <section id="about" class="py-20 bg-white">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 reveal">
-                 <h2 class="text-center text-3xl md:text-4xl font-extrabold text-gray-800 mb-16 relative">
-                     Belajar Langsung dari Praktisi Berpengalaman
-                     <span class="block w-20 h-1 bg-gradient-to-r from-indigo-600 to-purple-800 rounded-full mx-auto mt-4"></span>
+                 <h2 class="text-center text-3xl md:text-4xl font-extrabold text-gray-800 mb-16">
+                      Belajar Langsung dari Praktisi Berpengalaman
+                      <span class="block w-20 h-1 bg-gradient-to-r from-indigo-600 to-purple-800 rounded-full mx-auto mt-4"></span>
                  </h2>
                 <div class="grid grid-cols-1 md:grid-cols-5 gap-12 items-center">
                     <div class="md:col-span-2 flex justify-center">
-                        <!-- LinkedIn Badge Scaled Up -->
                         <div style="transform: scale(1.15); transform-origin: center;">
                             <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="large" data-theme="light" data-type="VERTICAL" data-vanity="fajarudinakbar" data-version="v1">
-                                <!-- The name inside the badge is controlled by LinkedIn's script. -->
-                                <!-- The text inside the anchor tag below is a fallback and has been removed. -->
-                                <a class="badge-base__link LI-simple-link" href="https://id.linkedin.com/in/fajarudinakbar?trk=profile-badge">&nbsp;</a>
+                                <!-- A11Y: Added accessible text for screen readers inside the link -->
+                                <a class="badge-base__link LI-simple-link" href="https://id.linkedin.com/in/fajarudinakbar?trk=profile-badge">
+                                    <span class="sr-only">Fajarudin Akbar's LinkedIn Profile</span>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -224,7 +254,7 @@
                         </p>
                         <div class="space-y-4">
                            <div class="flex items-start">
-                                <div class="flex-shrink-0 h-6 w-6 text-indigo-600 mt-1"><i data-feather="award"></i></div>
+                                <div class="flex-shrink-0 h-6 w-6 text-indigo-600 mt-1"><i data-feather="award" aria-hidden="true"></i></div>
                                 <div class="ml-3">
                                     <h4 class="text-lg font-semibold">Kualifikasi Utama Saya</h4>
                                     <ul class="list-disc list-inside text-gray-600">
@@ -233,10 +263,11 @@
                                         <li>Pembicara di berbagai forum pendidikan global</li>
                                     </ul>
                                 </div>
-                            </div>
+                           </div>
                         </div>
-                         <a href="https://linkedin.com/in/fajarudinakbar" target="_blank" class="mt-8 inline-flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-transform hover:scale-105 shadow-md">
-                             Lihat Profil LinkedIn Saya <i data-feather="arrow-right" class="w-5 h-5"></i>
+                         <!-- A11Y: Added screen reader text for opening in a new tab -->
+                         <a href="https://linkedin.com/in/fajarudinakbar" target="_blank" rel="noopener noreferrer" class="mt-8 inline-flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-transform hover:scale-105 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                             Lihat Profil LinkedIn Saya <span class="sr-only">(terbuka di tab baru)</span> <i data-feather="arrow-right" class="w-5 h-5" aria-hidden="true"></i>
                          </a>
                     </div>
                 </div>
@@ -246,26 +277,26 @@
         <!-- Programs Section -->
         <section id="programs" class="py-20 bg-gray-50">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 reveal">
-                <h2 class="text-center text-3xl md:text-4xl font-extrabold text-gray-800 mb-16 relative">
+                <h2 class="text-center text-3xl md:text-4xl font-extrabold text-gray-800 mb-16">
                     Pilih Program Sesuai Kebutuhanmu
                     <span class="block w-20 h-1 bg-gradient-to-r from-indigo-600 to-purple-800 rounded-full mx-auto mt-4"></span>
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10">
                     <!-- Program Card 1 -->
                     <div class="bg-gradient-to-br from-indigo-600 to-purple-800 text-white p-10 rounded-2xl relative overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-1 shadow-lg hover:shadow-purple-300">
-                        <div class="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full transform translate-x-8 -translate-y-8"></div>
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full transform translate-x-8 -translate-y-8" aria-hidden="true"></div>
                         <h3 class="text-2xl mb-4 relative z-10 font-semibold">1. Bahasa Inggris Akademik</h3>
                         <p class="opacity-90 relative z-10 leading-relaxed">Buat kamu yang butuh jago nulis tugas, jurnal, atau presentasi kuliah standar internasional.</p>
                     </div>
                     <!-- Program Card 2 -->
                     <div class="bg-gradient-to-br from-indigo-600 to-purple-800 text-white p-10 rounded-2xl relative overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-1 shadow-lg hover:shadow-purple-300">
-                        <div class="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full transform translate-x-8 -translate-y-8"></div>
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full transform translate-x-8 -translate-y-8" aria-hidden="true"></div>
                         <h3 class="text-2xl mb-4 relative z-10 font-semibold">2. Bahasa Inggris Bisnis</h3>
                         <p class="opacity-90 relative z-10 leading-relaxed">Biar makin pede kirim email, wawancara kerja, presentasi bisnis, dan ngobrol di lingkungan kerja global.</p>
                     </div>
                     <!-- Program Card 3 -->
                     <div class="bg-gradient-to-br from-indigo-600 to-purple-800 text-white p-10 rounded-2xl relative overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-1 shadow-lg hover:shadow-purple-300">
-                        <div class="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full transform translate-x-8 -translate-y-8"></div>
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full transform translate-x-8 -translate-y-8" aria-hidden="true"></div>
                         <h3 class="text-2xl mb-4 relative z-10 font-semibold">3. Persiapan Tes (TOEFL/IELTS)</h3>
                         <p class="opacity-90 relative z-10 leading-relaxed">Strategi jitu, bedah kelemahan, dan latihan intensif biar skor TOEFL/IELTS kamu tembus target.</p>
                     </div>
@@ -276,16 +307,17 @@
         <!-- YouTube Playlist Section -->
         <section id="playlist" class="py-20 bg-gray-50">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 reveal">
-                <h2 class="text-center text-3xl md:text-4xl font-extrabold text-gray-800 mb-4 relative">
+                <h2 class="text-center text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">
                     Dipercaya di Panggung Internasional
                 </h2>
                 <p class="text-center text-lg text-gray-600 mb-16 max-w-3xl mx-auto">Berbagi ilmu dan pengalaman seputar ngajar bahasa dan teknologi di berbagai acara internasional.</p>
                 <div class="max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-2xl">
                     <div class="relative" style="padding-top: 56.25%;"> <!-- 16:9 Aspect Ratio -->
+                        <!-- A11Y: Added title attribute to iframe for screen reader context -->
                         <iframe 
                             class="absolute top-0 left-0 w-full h-full"
                             src="https://www.youtube.com/embed/videoseries?list=PL9a2kUfbEt5sQ9ASDoAjDMLfiojAMU0Kn" 
-                            title="YouTube video player" 
+                            title="Daftar Putar YouTube: Penampilan Internasional Fajarudin Akbar" 
                             frameborder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowfullscreen>
@@ -303,13 +335,13 @@
                 </h2>
                 <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto">Ngobrolin dulu aja target belajarmu, nanti kita cari cara terbaik buat mencapainya. Konsultasi pertama gratis, kok!</p>
                 <div class="flex flex-col md:flex-row justify-center items-center gap-5 flex-wrap mt-10">
-                    <a href="https://t.me/teacher" target="_blank" class="px-8 py-4 rounded-full no-underline font-bold text-lg transition-all duration-300 ease-in-out inline-flex items-center gap-3 bg-indigo-600 text-white hover:bg-indigo-700 hover:-translate-y-1 hover:shadow-xl">
-                        <i data-feather="send" class="w-6 h-6"></i>
-                        Tanya-tanya di Telegram
+                    <a href="https://t.me/teacher" target="_blank" rel="noopener noreferrer" class="px-8 py-4 rounded-full no-underline font-bold text-lg transition-all duration-300 ease-in-out inline-flex items-center gap-3 bg-indigo-600 text-white hover:bg-indigo-700 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500">
+                        <i data-feather="send" class="w-6 h-6" aria-hidden="true"></i>
+                        Tanya-tanya di Telegram <span class="sr-only">(terbuka di tab baru)</span>
                     </a>
-                    <a href="https://s.id/englishtech-pvt" target="_blank" class="px-8 py-4 rounded-full no-underline font-bold text-lg transition-all duration-300 ease-in-out inline-flex items-center gap-3 bg-transparent text-white border-2 border-white hover:bg-white hover:text-gray-800 hover:-translate-y-1 hover:shadow-xl">
-                        <i data-feather="file-text" class="w-6 h-6"></i>
-                        Langsung Isi Formulir
+                    <a href="https://s.id/englishtech-pvt" target="_blank" rel="noopener noreferrer" class="px-8 py-4 rounded-full no-underline font-bold text-lg transition-all duration-300 ease-in-out inline-flex items-center gap-3 bg-transparent text-white border-2 border-white hover:bg-white hover:text-gray-800 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                        <i data-feather="file-text" class="w-6 h-6" aria-hidden="true"></i>
+                        Langsung Isi Formulir <span class="sr-only">(terbuka di tab baru)</span>
                     </a>
                 </div>
             </div>
@@ -317,21 +349,21 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 py-10 text-center">
+    <footer class="bg-gray-900 text-gray-300 py-10 text-center"> <!-- A11Y: Increased contrast from text-gray-400 -->
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <h3 class="text-xl text-white font-semibold mb-5">Ikuti Saya</h3>
             <div class="flex justify-center gap-6 mt-5 flex-wrap">
-                <!-- Social Links -->
-                <a href="https://linkedin.com/in/fajarudinakbar" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                <!-- A11Y: Added aria-label to social media links for clarity -->
+                <a href="https://linkedin.com/in/fajarudinakbar" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white transition-colors" aria-label="Fajarudin Akbar di LinkedIn">
                     <i data-feather="linkedin" class="w-7 h-7"></i>
                 </a>
-                <a href="https://youtube.com/@fajarudinakbar" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                <a href="https://youtube.com/@fajarudinakbar" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white transition-colors" aria-label="Fajarudin Akbar di YouTube">
                     <i data-feather="youtube" class="w-7 h-7"></i>
                 </a>
-                <a href="https://facebook.com/mrfajarudinakbar" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                <a href="https://facebook.com/mrfajarudinakbar" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white transition-colors" aria-label="Fajarudin Akbar di Facebook">
                     <i data-feather="facebook" class="w-7 h-7"></i>
                 </a>
-                <a href="https://instagram.com/fajarudinakbar" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                <a href="https://instagram.com/fajarudinakbar" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white transition-colors" aria-label="Fajarudin Akbar di Instagram">
                     <i data-feather="instagram" class="w-7 h-7"></i>
                 </a>
             </div>
@@ -348,17 +380,40 @@
         // Set current year in footer
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // Mobile menu toggle
+        // --- Mobile menu toggle ---
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+
+        const toggleMenu = () => {
+            const isExpanded = mobileMenu.classList.toggle('hidden');
+            // A11Y: Toggle aria-expanded state
+            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+        };
+
+        mobileMenuButton.addEventListener('click', toggleMenu);
+
+        // UX Improvement: Close menu when a link is clicked
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (!mobileMenu.classList.contains('hidden')) {
+                    toggleMenu();
+                }
+            });
         });
 
-        // Intersection Observer for scroll animations
+        // A11Y & UX: Close menu with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+                toggleMenu();
+            }
+        });
+
+        // --- Intersection Observer for scroll animations ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntering) {
+                // Bug Fix: Changed 'isIntering' to 'isIntersecting'
+                if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                 }
             });
